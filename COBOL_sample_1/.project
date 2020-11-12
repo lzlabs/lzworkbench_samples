@@ -19,7 +19,6 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>com.lzlabs.lzwbEclipsePlugin.builder.natures.LzWorkbenchCobolNature</nature>
-		<nature>com.lzlabs.lzwbEclipsePlugin.builder.natures.LzWorkbenchPLINature</nature>
 		<nature>com.lzlabs.lzwbEclipsePlugin.builder.natures.LzWorkbenchJCLNature</nature>
 		<nature>com.lzlabs.lzwbEclipsePlugin.builder.natures.LzWorkbenchNature</nature>
 	</natures>
