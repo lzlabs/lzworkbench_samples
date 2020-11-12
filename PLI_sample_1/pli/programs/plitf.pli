@@ -1,0 +1,12 @@
+ /* PLITF: Increment "by reference" argument by 10 */
+ PLITF: PROC(G) OPTIONS (FETCHABLE);
+   PUT SKIP LIST( '***     PLITF Call Test      ***' );
+   PUT SKIP LIST( 'PLITF TEST : Increment "by reference" argument by 10' );
+
+   DCL G FIXED BIN(15);
+
+   PUT SKIP LIST( 'PLITF TEST: input val g    = ' || G );
+
+   G = G + 10;
+   
+ END PLITF;

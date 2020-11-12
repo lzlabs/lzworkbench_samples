@@ -1,0 +1,53 @@
+ FETCHEDROUTINES: PROCEDURE;
+   
+   DCL PLITA ENTRY EXTERNAL;
+   DCL PLITB ENTRY RETURNS(FIXED BIN(31)) EXTERNAL;
+   DCL PLITD ENTRY EXTERNAL;
+   DCL PLITF ENTRY EXTERNAL;
+   DCL PLITG ENTRY RETURNS(FIXED BIN(15)) EXTERNAL;
+   DCL G  FIXED BIN(15)    INIT (0);
+   DCL H  FIXED BIN(15)    INIT (0);
+   DCL H1 FIXED BIN(15)    INIT (0);
+   DCL I  FIXED BIN(31)    INIT (1);
+   DCL I2 FIXED BIN(31)    INIT (0);
+   DCL J  FIXED DEC(10,2)  INIT (0);
+
+   PUT SKIP LIST( '====== Start Fetch Test. ========' );
+
+   FETCH PLITA;
+   PUT SKIP LIST( 'AFTER FETCH: PLITA' );
+   I = 11;
+   CALL PLITA(I);
+   PUT SKIP LIST( 'AFTER CALL: PLITA - I      = ' || I );
+   PUT SKIP LIST( '***                          ***' );
+
+   FETCH PLITB;
+   PUT SKIP LIST( 'AFTER FETCH: PLITB' );
+   I  = 11;
+   I2 = PLITB(I);
+   PUT SKIP LIST( 'AFTER CALL: PLITB - I2     = ' || I2 );
+   PUT SKIP LIST( '***                          ***' );
+
+   FETCH PLITD;
+   PUT SKIP LIST( 'AFTER FETCH: PLITD' );
+   J = 1.0;
+   CALL PLITD(J);
+   PUT SKIP LIST( 'AFTER CALL: PLITD - J      = ' || J );
+   PUT SKIP LIST( '***                          ***' );
+
+   FETCH PLITF, PLITG;
+   PUT SKIP LIST( 'After general fetch of PLITF, PLITG' );
+
+   G = 15;
+   CALL PLITF(G);
+   PUT SKIP LIST( 'AFTER CALL: PLITF - G      = ' || G );
+   PUT SKIP LIST( '***                          ***' );
+
+   H = 1;
+   H1 = PLITG(H);
+   PUT SKIP LIST( 'AFTER CALL  PLITG - H1     = ' || H1 );
+   PUT SKIP LIST( '***                          ***' );
+
+   PUT SKIP LIST( '====== End Fetch Test. ========' );
+
+ END FETCHEDROUTINES;

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><file hh="OW/KvvmZ3aQAEcErj8f6d0LpZRFk3vwxGLt3tSNy4DA=" tpf="2" ur="file:/C:/Users/gghezzi/Desktop/SampleProjects/samplePLI/pli/programs/plitc.pli">
+<mpg>
+<plp el="15" ep="476" iep="476" isp="1" nm="plitc.pli" sl="1" sp="1" tp="1">
+<chs>
+<plp el="14" ep="475" iep="119" isp="115" nm="PLITC" sl="3" sp="114" tp="2">
+<chs>
+<plp el="9" ep="375" iep="361" isp="361" nm="I" sl="8" sp="361" tp="14"/>
+<plp el="10" ep="394" iep="385" isp="385" nm="S" sl="9" sp="385" tp="14"/>
+<plp el="11" ep="428" iep="418" isp="413" nm="LENGTH" sl="11" sp="398" tp="11"/>
+<plp el="12" ep="455" iep="439" isp="434" nm="SUBSTR" sl="12" sp="429" tp="11"/>
+</chs>
+</plp>
+</chs>
+</plp>
+</mpg>
+</file>

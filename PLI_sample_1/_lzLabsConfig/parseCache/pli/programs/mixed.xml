@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><file hh="axI66bPHcFObG0KqPmSYTleK/K18DXHqu0DBwJn8m2w=" tpf="2" ur="file:/C:/Users/gghezzi/git/lzworkbench_samples/PLI_sample_1/pli/programs/mixed.pli">
+<mpg>
+<plp el="42" ep="899" iep="899" isp="1" nm="mixed.pli" sl="1" sp="1" tp="1">
+<chs>
+<plp el="41" ep="898" iep="6" isp="2" nm="MIXED" sl="1" sp="1" tp="2">
+<chs>
+<plp el="3" ep="63" iep="48" isp="42" nm="SQLTEST" sl="2" sp="42" tp="5"/>
+<plp el="4" ep="92" iep="77" isp="73" nm="KEYIO" sl="3" sp="73" tp="5"/>
+<plp el="5" ep="131" iep="116" isp="102" nm="FETCHEDROUTINES" sl="4" sp="102" tp="5"/>
+<plp el="7" ep="163" iep="142" isp="142" nm="I" sl="6" sp="142" tp="14"/>
+<plp el="8" ep="201" iep="174" isp="173" nm="S2" sl="7" sp="173" tp="14"/>
+<plp el="9" ep="229" iep="202" isp="202" nm="S" sl="8" sp="202" tp="14"/>
+<plp el="19" ep="391" iep="387" isp="381" nm="SQLTEST" sl="19" sp="370" tp="9" urc="file:/C:/Users/gghezzi/git/lzworkbench_samples/PLI_sample_1/pli/programs/sqltest.pli"/>
+<plp el="23" ep="436" iep="432" isp="428" nm="KEYIO" sl="23" sp="418" tp="9" urc="file:/C:/Users/gghezzi/git/lzworkbench_samples/PLI_sample_1/pli/programs/keyio.pli"/>
+<plp el="27" ep="491" iep="487" isp="473" nm="FETCHEDROUTINES" sl="27" sp="463" tp="9" urc="file:/C:/Users/gghezzi/git/lzworkbench_samples/PLI_sample_1/pli/programs/fetchedroutines.pli"/>
+<plp el="39" ep="885" iep="516" isp="507" nm="SHOWSTRING" sl="30" sp="504" tp="3">
+<chs>
+<plp el="30" ep="555" iep="548" isp="545" nm="CHAR" sl="30" sp="504" tp="11"/>
+<plp el="34" ep="646" iep="637" isp="627" nm="STRINGPARAM" sl="33" sp="627" tp="14"/>
+<plp el="35" ep="761" iep="755" isp="752" nm="TRIM" sl="35" sp="718" tp="11"/>
+</chs>
+</plp>
+</chs>
+</plp>
+</chs>
+</plp>
+</mpg>
+</file>

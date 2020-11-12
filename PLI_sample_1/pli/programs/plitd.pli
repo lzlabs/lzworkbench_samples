@@ -1,0 +1,13 @@
+ /* PLITD: Accept a packed decimal number and increment by 1.4 */
+ PLITD: PROC(J) OPTIONS (FETCHABLE);
+   PUT SKIP LIST( '***     PLITD Call Test      ***' );
+   PUT SKIP LIST( 'PLITD TEST : Accept a packed decimal number and' );
+   PUT SKIP LIST( '             increment by 1.4' );
+
+   DCL J FIXED DEC(10,2);
+
+   PUT SKIP LIST( 'PLITD TEST : input val J   = ' || J );
+
+   J = J + 1.4;
+
+ END PLITD;

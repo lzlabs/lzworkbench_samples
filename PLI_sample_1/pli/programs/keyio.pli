@@ -1,0 +1,187 @@
+ KEYIO: PROCEDURE;
+
+   DCL T1SZ     FIXED BIN(31) VALUE(13);
+   DCL KEYSZ    FIXED BIN(31) VALUE(9);
+   DCL RECSZ    FIXED BIN(31) VALUE(80);
+   DCL NLINES   FIXED BIN(31) VALUE(10);
+   DCL VSAMFILE FILE UNBUFFERED KEYED;
+
+   DCL 1 ROW,
+          5 TEXT1  CHAR(T1SZ),
+          5 KEY    CHAR(KEYSZ),
+          5 TEXT2  CHAR(RECSZ - T1SZ - KEYSZ);
+
+   DCL KEYS( NLINES ) CHAR(KEYSZ);
+
+   DCL EXPECTEDLINES FIXED BIN(31) INIT(NLINES);
+
+   /* some random data: https://github.com/umbrae/reddit-top-2.5-million/blob/master/data/serendipity.csv */
+   DCL LINES( NLINES ) CHAR(RECSZ) INIT( '123456789abc 1gzctq   Sugar cube',
+                                         ' 123456789ab 1c5wul   ITAP of my friend with a tornado behind her',
+                                         '  123456789a 1gv653   The crash almost feels real.',
+                                         '   123456789 1j84cz   I find this funnier than I should...',
+                                         '    12345678 1f0be3   Texting a girl.',
+                                         '     1234567 1gdyou   Shot over Dubai tilt shift',
+                                         '      123456 1hl6q8   Thank god for CNN',
+                                         '       12345 1iy8n0   Just.... just watch it.',
+                                         '        1234 1dff0n   What one potato say to second potato?',
+                                         '         123 1joufe   I kinda hate myself for this.' );
+
+   /* Write some records to an empty VSAM DATASET */
+   CALL CREATEFILE();
+
+   /* Sequential read from this DATASET, grabbing the keys and saving them to the KEYS variable in the KEYIO PROC scope. */
+   CALL READKEYS();
+
+   /* Now do some record IO from this DATASET by KEY */
+   CALL READBYKEY();
+
+   /* Update some records by KEY and then do a sequential read pass to see the results */
+   CALL UPDATEFILE();
+   CALL READKEYS();
+
+   /* Delete a record, and then attempt to access by the now invalid KEY */
+   CALL DELETERECORD();
+
+ DONE:
+   CALL READKEYS();
+   PUT SKIP LIST( 'Done KEYIO' );
+
+   DELETERECORD: PROC;
+     DCL LINE CHAR(RECSZ) INIT('');
+     DCL KV CHAR(KEYSZ) INIT('1j84cz   ');
+
+     ON KEY(VSAMFILE) BEGIN;
+       PUT SKIP LIST( 'KEY CONDITION caught with: ' || KV );
+       CLOSE FILE(VSAMFILE);
+
+       /* Non-local GOTO */
+       GOTO DONE;
+     END;
+
+     PUT SKIP LIST( 'Attempt delete and invalid key access.' );
+     OPEN FILE(VSAMFILE) UPDATE;
+
+     DELETE FILE(VSAMFILE) KEY(KV);
+     /* PL/I variables are not case sensitive */
+     EXPecteDLIneS = EXPECTEDLINES - 1;
+
+     /* Now do a read that should drive a KEY condition */
+     READ FILE(VSAMFILE) INTO(LINE) KEY(KV);
+     PUT SKIP LIST( KV || ' : ' || LINE );
+
+     CLOSE FILE(VSAMFILE);
+     PUT SKIP LIST( 'Should not get here.' );
+   END DELETERECORD;
+
+   UPDATEFILE: PROC;
+     DECLARE I FIXED BIN(31) INIT(0);
+
+     DCL KV CHAR(KEYSZ);
+     DCL NEWLINE CHAR(RECSZ);
+
+     PUT SKIP LIST( 'Updates to VSAMFILE.' );
+     OPEN FILE(VSAMFILE) UPDATE;
+
+     DO WHILE ( I < 4 );
+       I = I + 1;
+       KV = KEYS(I);
+       NEWLINE = LINES(I);
+       SUBSTR(NEWLINE, 1, 1) = '*';
+
+       REWRITE FILE(VSAMFILE) FROM(NEWLINE) KEY(KV);
+     END;
+
+     CLOSE FILE(VSAMFILE);
+     PUT SKIP LIST( 'Done updates.' );
+   END UPDATEFILE;
+
+   READBYKEY: PROC;
+     DECLARE ROWS(4) FIXED BIN(31) INIT( 1, 2, 7, 8 );
+     DECLARE I FIXED BIN(31) INIT(0);
+
+     DCL K FIXED BIN(31);
+     DCL KV CHAR(KEYSZ);
+
+     PUT SKIP LIST( 'Random reads from VSAMFILE.' );
+     OPEN FILE(VSAMFILE) INPUT;
+
+/*
+PUT SKIP LIST( 'SIZE OF ROW' || SIZE(ROW) );
+PUT SKIP LIST( 'SIZE OF ROW.TEXT1' || SIZE(ROW.TEXT1) );
+PUT SKIP LIST( 'SIZE OF ROW.KEY' || SIZE(ROW.KEY) );
+PUT SKIP LIST( 'SIZE OF ROW.TEXT2' || SIZE(ROW.TEXT2) );
+*/
+     DO WHILE ( I < 4 );
+       I = I + 1;
+       K = ROWS(I);
+       KV = KEYS(K);
+       READ FILE(VSAMFILE) INTO(ROW) KEY(KV);
+
+       PUT SKIP LIST( I || ' ' || KV || ' : ' || ROW.TEXT1 || ' : ' || ROW.TEXT2 );
+     END;
+
+     CLOSE FILE(VSAMFILE);
+     PUT SKIP LIST( 'Done random reads.' );
+   END READBYKEY;
+
+   READKEYS: PROC;
+     OPEN FILE(VSAMFILE) INPUT;
+
+     DCL S CHAR(RECSZ);
+     DCL K CHAR(KEYSZ);
+     DCL I FIXED BIN(31) INIT(0);
+
+     DECLARE EOF BIT(1) INITIAL('0'B);
+     ON ENDFILE(VSAMFILE) BEGIN;
+       EOF = '1'B;
+       PUT SKIP LIST( 'ENDFILE caught' );
+     END;
+
+     PUT SKIP LIST( 'Sequential read from VSAMFILE.' );
+
+     DO WHILE (^EOF);
+       READ FILE(VSAMFILE) INTO(S) KEYTO(K);
+
+       IF (^EOF) THEN DO;
+         I = I + 1;
+         PUT SKIP LIST( I || ' ' || K || ' : ' || S );
+
+         KEYS(I) = K;
+
+         IF (I = EXPECTEDLINES) THEN DO;
+           PUT SKIP LIST( 'Should be finished reading records.  Expect to catch ENDFILE next.' );
+         END;
+       END;
+     END;
+
+     CLOSE FILE(VSAMFILE);
+     PUT SKIP LIST( I, ' records have been read from VSAMFILE.' );
+   END READKEYS;
+
+   CREATEFILE: PROC;
+     DCL I FIXED BIN(31) INIT(1);
+     DECLARE LINE CHAR(RECSZ) BASED(ADDR(ROW));
+
+     OPEN FILE(VSAMFILE) OUTPUT KEYED RECORD;
+
+     PUT SKIP LIST( 'Populating VSAMFILE' );
+     DO WHILE (I <= EXPECTEDLINES);
+
+       DCL K CHAR(KEYSZ);
+
+       LINE = LINES(I);
+       /* ROW is a variable from the caller's scope, aliased by BASED to this inner procedures local variable LINE */
+       K = ROW.KEY;
+
+       PUT SKIP LIST( I || ' WRITE KEYFROM "' || K || '"' );
+       WRITE FILE(VSAMFILE) FROM(LINES(I)) KEYFROM(K);
+
+       I = I + 1;
+     END;
+
+     CLOSE FILE(VSAMFILE);
+     PUT SKIP LIST( 'Created VSAMFILE' );
+
+   END CREATEFILE;
+ END KEYIO;

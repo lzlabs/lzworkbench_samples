@@ -1,0 +1,21 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. ADDEM.
+       ENVIRONMENT DIVISION.
+       CONFIGURATION SECTION.
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       LINKAGE SECTION.
+         01 PARAM-1  PIC 9(9).
+         01 PARAM-2  PIC 9(9).
+         01 RES      PIC 9(9).
+         
+       PROCEDURE DIVISION USING PARAM-1 PARAM-2 RETURNING RES.
+       MAIN-PROGRAM. 
+           DISPLAY '  <ADDEM>'
+           DISPLAY '    ' PARAM-1 ' + ' PARAM-2
+           COMPUTE RES = PARAM-1 + PARAM-2
+           DISPLAY '  </ADDEM>'
+
+           GOBACK
+           .
+

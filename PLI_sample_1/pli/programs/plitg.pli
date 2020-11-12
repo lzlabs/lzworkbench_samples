@@ -1,0 +1,11 @@
+ /* PLITG: Add 10 to parameter and return value */
+ PLITG: PROC(H) RETURNS(FIXED BIN(15)) OPTIONS (FETCHABLE);
+   PUT SKIP LIST( '***     PLITG Call Test      ***' );
+   PUT SKIP LIST( 'PLITG TEST : Add 10 to parameter and return value' );
+
+   DCL H FIXED BIN(15);
+
+   PUT SKIP LIST( 'PLITG TEST: input val of H = ' || H );
+
+   RETURN( H + 10 );
+ END PLITG;

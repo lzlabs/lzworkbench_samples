@@ -1,0 +1,13 @@
+ /* PLITB: Add 10  to parameter and return value */
+ PLITB: PROC(I) RETURNS (FIXED BIN(31)) OPTIONS (FETCHABLE);
+   PUT SKIP LIST( '***     PLITB Func Test      ***' );
+   PUT SKIP LIST( 'PLITB TEST: add 10 to parameter and return value' );
+
+   PUT SKIP LIST( 'modified' );
+
+   DCL I FIXED BIN(31);
+
+   PUT SKIP LIST( 'PLITB test :  input val i  = ' ||  I );
+
+   RETURN( I + 10 );
+ END PLITB;

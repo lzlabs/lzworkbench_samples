@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><file hh="PFVf93I/SGeLgxF2doeu4YkkJ+1+b3aaEzwa6TnPB5c=" tpf="2" ur="file:/C:/Users/gghezzi/Desktop/SampleProjects/samplePLI/pli/programs/keyio.pli">
+<mpg>
+<plp el="188" ep="5570" iep="5570" isp="1" nm="keyio.pli" sl="1" sp="1" tp="1">
+<chs>
+<plp el="187" ep="5569" iep="6" isp="2" nm="KEYIO" sl="1" sp="1" tp="2">
+<chs>
+<plp el="4" ep="59" iep="31" isp="28" nm="T1SZ" sl="3" sp="28" tp="14"/>
+<plp el="5" ep="99" iep="73" isp="69" nm="KEYSZ" sl="4" sp="69" tp="14"/>
+<plp el="6" ep="140" iep="113" isp="109" nm="RECSZ" sl="5" sp="109" tp="14"/>
+<plp el="7" ep="181" iep="155" isp="150" nm="NLINES" sl="6" sp="150" tp="14"/>
+<plp el="8" ep="220" iep="198" isp="191" nm="VSAMFILE" sl="7" sp="191" tp="17"/>
+<plp el="9" ep="235" iep="235" isp="233" nm="ROW" sl="9" sp="231" tp="14" vle="1">
+<chs>
+<plp el="10" ep="266" iep="254" isp="250" nm="TEXT1" sl="10" sp="238" tp="14" vle="5"/>
+<plp el="11" ep="298" iep="283" isp="281" nm="KEY" sl="11" sp="269" tp="14" vle="5"/>
+<plp el="12" ep="345" iep="317" isp="313" nm="TEXT2" sl="12" sp="301" tp="14" vle="5"/>
+</chs>
+</plp>
+<plp el="15" ep="381" iep="359" isp="356" nm="KEYS" sl="14" sp="356" tp="14"/>
+<plp el="17" ep="431" iep="404" isp="392" nm="EXPECTEDLINES" sl="16" sp="392" tp="14"/>
+<plp el="97" ep="3295" iep="2835" isp="2826" nm="UPDATEFILE" sl="77" sp="2823" tp="3">
+<chs>
+<plp el="79" ep="2879" iep="2857" isp="2857" nm="I" sl="78" sp="2857" tp="14"/>
+<plp el="81" ep="2905" iep="2893" isp="2892" nm="KV" sl="80" sp="2892" tp="14"/>
+<plp el="82" ep="2935" iep="2923" isp="2917" nm="NEWLINE" sl="81" sp="2917" tp="14"/>
+<plp el="90" ep="3145" iep="3122" isp="3117" nm="SUBSTR" sl="90" sp="3110" tp="11"/>
+</chs>
+</plp>
+<plp el="126" ep="4081" iep="3308" isp="3300" nm="READBYKEY" sl="99" sp="3297" tp="3">
+<chs>
+<plp el="101" ep="3369" iep="3333" isp="3330" nm="ROWS" sl="100" sp="3330" tp="14"/>
+<plp el="102" ep="3407" iep="3385" isp="3385" nm="I" sl="101" sp="3385" tp="14"/>
+<plp el="104" ep="3434" iep="3420" isp="3420" nm="K" sl="103" sp="3420" tp="14"/>
+<plp el="105" ep="3459" iep="3447" isp="3446" nm="KV" sl="104" sp="3446" tp="14"/>
+<plp el="110" ep="3596" iep="3585" isp="3582" nm="SIZE" sl="110" sp="3552" tp="11"/>
+<plp el="111" ep="3653" iep="3630" isp="3627" nm="SIZE" sl="111" sp="3597" tp="11"/>
+<plp el="112" ep="3706" iep="3687" isp="3684" nm="SIZE" sl="112" sp="3654" tp="11"/>
+<plp el="113" ep="3763" iep="3741" isp="3738" nm="SIZE" sl="113" sp="3707" tp="11"/>
+</chs>
+</plp>
+<plp el="160" ep="4898" iep="4093" isp="4086" nm="READKEYS" sl="128" sp="4083" tp="3">
+<chs>
+<plp el="132" ep="4156" iep="4144" isp="4144" nm="S" sl="131" sp="4144" tp="14"/>
+<plp el="133" ep="4180" iep="4168" isp="4168" nm="K" sl="132" sp="4168" tp="14"/>
+<plp el="134" ep="4214" iep="4192" isp="4192" nm="I" sl="133" sp="4192" tp="14"/>
+<plp el="136" ep="4263" iep="4233" isp="4231" nm="EOF" sl="135" sp="4231" tp="14"/>
+<plp el="136" ep="4289" iep="4271" isp="4265" nm="ENDFILE" sl="136" sp="4257" tp="11"/>
+</chs>
+</plp>
+<plp el="186" ep="5557" iep="4912" isp="4903" nm="CREATEFILE" sl="162" sp="4900" tp="3">
+<chs>
+<plp el="164" ep="4952" iep="4930" isp="4930" nm="I" sl="163" sp="4930" tp="14"/>
+<plp el="165" ep="5000" iep="4971" isp="4968" nm="LINE" sl="164" sp="4968" tp="14"/>
+<plp el="172" ep="5156" iep="5144" isp="5144" nm="K" sl="171" sp="5144" tp="14"/>
+</chs>
+</plp>
+</chs>
+</plp>
+</chs>
+</plp>
+</mpg>
+</file>

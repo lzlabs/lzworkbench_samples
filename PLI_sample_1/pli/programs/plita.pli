@@ -1,0 +1,12 @@
+ /* plita: Increment "by reference" argument by 10 */
+ PLITA: PROC(I) OPTIONS (FETCHABLE);
+   PUT SKIP LIST( '***     PLITA Call Test      ***' );
+   PUT SKIP LIST( 'PLITA TEST: Increment "by reference" argument by 10' );
+
+   DCL I FIXED BIN(31);
+  
+   PUT SKIP LIST( 'PLITA TEST: input val    i : ' || I );
+
+   I = I + 10;  
+   
+ END PLITA;

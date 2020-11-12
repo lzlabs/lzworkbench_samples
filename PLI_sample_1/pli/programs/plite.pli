@@ -1,0 +1,11 @@
+ /* PLITE: Accept a floating point number and increment 1.2 */
+ PLITE: PROC(F) OPTIONS (FETCHABLE);
+   PUT SKIP LIST( '***     PLITE Call Test      ***' );
+   PUT SKIP LIST( 'PLITE TEST : Accept a floating point number and' );
+   PUT SKIP LIST( '             increment 1.2' );
+
+   DCL F FLOAT BIN;
+   PUT SKIP LIST( 'PLITE TEST: input val f    : ' || F );
+
+   F = F + 1.2;
+ END PLITE;

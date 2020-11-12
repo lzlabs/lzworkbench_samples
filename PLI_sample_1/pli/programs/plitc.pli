@@ -1,0 +1,14 @@
+ /* plitc: Accept a string of 26 characters an replace every second with
+           the underscore character. */
+ PLITC: PROC(S) OPTIONS (FETCHABLE);
+   PUT SKIP LIST( '***     PLITC Call Test      ***' );
+   PUT SKIP LIST( 'PLITC TEST: Accept a string of 26 characters and' );
+   PUT SKIP LIST( '            replace every second with the "_" char' );
+
+   DCL I FIXED BIN(31);
+   DCL S CHAR(26);
+
+   DO I = 1 TO LENGTH(S) BY 2;
+     SUBSTR(S,I, 1) = '_';
+   END;
+ END PLITC;
