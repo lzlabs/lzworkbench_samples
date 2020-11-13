@@ -1,5 +1,6 @@
-       PROCEDURE DIVISION USING LINKAGE-PARMS.                          01050000
-                                                        
-           MOVE '1' TO SPOOLR-ASA.                                      01120600
-           MOVE SPACES TO SPOOLR-TEXT.                                  01120610
-                                                                        01120620
+       01  STRUCT.
+         05  NAME             PIC X(30).
+         05  BIRTH-DATE.      
+             10 DATE-YEAR          PIC 9(4) VALUE '2020'. 
+             10 DATE-MONTH         PIC 9(2).
+             10 DATE-DAY           PIC 9(2).
