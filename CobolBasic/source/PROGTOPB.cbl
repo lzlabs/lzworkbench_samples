@@ -72,7 +72,7 @@
                                                                         01110000
            MOVE +0 TO RETURN-CODE                                       01120000
 
-           DISPLAY '@ PROGTOPB1.' upon console.
+           DISPLAY '@ PROGTOPB.' upon console.
 
            MOVE LP-DATA (1:LP-LENGTH) TO WS-PARAMETERS.                 01120100
            UNSTRING WS-PARAMETERS DELIMITED BY ',' OR ALL SPACES        01120200

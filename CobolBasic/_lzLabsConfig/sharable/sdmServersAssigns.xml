@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><SDMServersAssignements version="1">
 <SDMServerAssignement SDMServerId="1" assignedToSDMServer="true">
-<databases/>
+<databases>
+<database>
+<RDBConnectionString db="WDBS" dbCollId="DEMOCOB" dbPlan="DEMOCOB" dbSchema="LZL"/>
+</database>
+</databases>
 </SDMServerAssignement>
 </SDMServersAssignements>
