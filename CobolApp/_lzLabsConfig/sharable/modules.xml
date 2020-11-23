@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<deploymentsSettings projectName="SDM_CobolDemo" version="1">
-    <deployableItems lastId="3471">
+<deploymentsSettings projectName="CobolApp" version="1">
+    <deployableItems lastId="3485">
         <deployable addPrefix="true" deployable="true"
-            directorySize="1000" dsn="X.Y.DRIVER.Z" id="42"
+            directorySize="1000" dsn="COBOL.APP.DRIVER.LIB" id="42"
             language="cobol" name="driver">
             <programs>
                 <program name="source/vsam.cob"/>

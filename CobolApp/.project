@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>COBOL_sample_2</name>
+	<name>CobolApp</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -66,6 +66,15 @@
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
 				<arguments>1.0-name-matches-false-false-shared.ts</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>0</id>
+			<name>_lzLabsConfig</name>
+			<type>9</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-sharable</arguments>
 			</matcher>
 		</filter>
 	</filteredResources>
