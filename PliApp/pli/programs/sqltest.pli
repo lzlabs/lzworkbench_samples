@@ -3,7 +3,7 @@
    EXEC SQL INCLUDE SQLCA;
  
    DCL SUBSYSTEMNAME  CHAR(4)       INIT('WDBS');
-   DCL PLANNAME       CHAR(8)       INIT('MIXED');
+   DCL PLANNAME       CHAR(8)       INIT('DEMOPLI');
    DCL COLLECTIONNAME CHAR(18)      INIT('');
    DCL REUSE          CHAR(8)       INIT('RESET');
    DCL RIB            FIXED BIN(31) INIT(0);

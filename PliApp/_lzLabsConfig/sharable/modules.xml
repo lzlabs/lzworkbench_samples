@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<deploymentsSettings projectName="samplePLI" version="1">
-    <deployableItems lastId="3471">
+<deploymentsSettings projectName="PliApp" version="1">
+    <deployableItems lastId="3486">
         <deployable addPrefix="true" deployable="true"
-            directorySize="1000" dsn="X.Y.MIXED.Z" id="3446"
+            directorySize="1000" dsn="PLI.APP.MIXED.LIB" id="3446"
             language="pli" name="mixed">
             <programs>
                 <program name="pli/programs/mixed.pli"/>

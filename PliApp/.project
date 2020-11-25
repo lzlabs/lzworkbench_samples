@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>PLI_sample_1</name>
+	<name>PliApp</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -22,4 +22,15 @@
 		<nature>com.lzlabs.lzwbEclipsePlugin.builder.natures.LzWorkbenchPLINature</nature>
 		<nature>com.lzlabs.lzwbEclipsePlugin.builder.natures.LzWorkbenchJCLNature</nature>
 	</natures>
+	<filteredResources>
+		<filter>
+			<id>0</id>
+			<name>_lzLabsConfig</name>
+			<type>9</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-sharable</arguments>
+			</matcher>
+		</filter>
+	</filteredResources>
 </projectDescription>
