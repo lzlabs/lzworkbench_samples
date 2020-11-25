@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploymentsSettings projectName="PliApp" version="1">
+    <deployableItems lastId="3486">
+        <deployable addPrefix="true" deployable="true"
+            directorySize="1000" dsn="PLI.APP.MIXED.LIB" id="3446"
+            language="pli" name="mixed">
+            <programs>
+                <program name="pli/programs/mixed.pli"/>
+                <program name="pli/programs/fetchedroutines.pli"/>
+                <program name="pli/programs/plitc.pli"/>
+                <program name="pli/programs/plitd.pli"/>
+                <program name="pli/programs/plite.pli"/>
+                <program name="pli/programs/plitg.pli"/>
+                <program name="pli/programs/plita.pli"/>
+                <program name="pli/programs/plitf.pli"/>
+                <program name="pli/programs/sqltest.pli"/>
+                <program name="pli/programs/plitb.pli"/>
+                <program name="pli/programs/keyio.pli"/>
+            </programs>
+        </deployable>
+    </deployableItems>
+</deploymentsSettings>

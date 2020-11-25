@@ -1,0 +1,224 @@
+ /** Some EXEC SQL tests */
+ SQLTEST: PROC;
+   EXEC SQL INCLUDE SQLCA;
+ 
+   DCL SUBSYSTEMNAME  CHAR(4)       INIT('WDBS');
+   DCL PLANNAME       CHAR(8)       INIT('DEMOPLI');
+   DCL COLLECTIONNAME CHAR(18)      INIT('');
+   DCL REUSE          CHAR(8)       INIT('RESET');
+   DCL RIB            FIXED BIN(31) INIT(0);
+   DCL EIB            FIXED BIN(31) INIT(0);
+   DCL ECBTERMINATION FIXED BIN(31) INIT(0);
+   DCL DB2STARTED     FIXED BIN(31) INIT(0);
+   DCL RETURNCODE     FIXED BIN(31) INIT(0);
+   DCL REASONCODE     FIXED BIN(31) INIT(0);
+   DCL FUNCTION       CHAR(18);
+   DCL DSNRLI         EXTERNAL ENTRY OPTIONS(ASM, INTER, RETCODE);
+ 
+   CALL CONNECT();
+   CALL PIC_TEST(); 
+   CALL INPUT_AND_OUTPUT_HOSTVARS();
+   CALL DYNAMIC_SQL_INSERT();
+   CALL FETCH_TEST();
+   CALL CONNECT_RESET();
+ 
+   /** Call the system DSNRLI Assembler routine to establish a connection to the database */
+   CONNECT: PROC;
+     FUNCTION = 'IDENTIFY';
+     CALL DSNRLI( FUNCTION,
+                  SUBSYSTEMNAME,
+                  RIB,
+                  EIB,
+                  ECBTERMINATION,
+                  DB2STARTED,
+                  RETURNCODE,
+                  REASONCODE );
+     PUT SKIP LIST( FUNCTION ||
+                    ': db=' || TRIM(SUBSYSTEMNAME) ||
+                    ', rc=' || TRIM(RETURNCODE) ||
+                    ', reason=' || TRIM(REASONCODE) );
+  
+     FUNCTION = 'CREATE THREAD';
+
+     CALL DSNRLI( FUNCTION,
+                  PLANNAME,
+                  COLLECTIONNAME,
+                  REUSE,
+                  RETURNCODE,
+                  REASONCODE );
+
+     PUT SKIP LIST( FUNCTION ||
+                    ': plan=' || TRIM(PLANNAME) ||
+                    ', rc=' || TRIM(RETURNCODE) ||
+                    ', reason=' || TRIM(REASONCODE) );
+   END;
+ 
+   /* Call the DSNRLI Assembler routine to reset the connection to the database */
+   CONNECT_RESET: PROC;
+     FUNCTION = 'TERMINATE THREAD';
+
+     CALL DSNRLI( FUNCTION,
+                  RETURNCODE,
+                  REASONCODE );
+
+     PUT SKIP LIST( FUNCTION ||
+                    ': rc=' || TRIM(RETURNCODE) ||
+                    ', reason=' || TRIM(REASONCODE) );
+  
+     FUNCTION = 'TERMINATE IDENTIFY';
+
+     CALL DSNRLI( FUNCTION,
+                  RETURNCODE,
+                  REASONCODE );
+
+     PUT SKIP LIST( FUNCTION ||
+                    ': rc=' || TRIM(RETURNCODE) ||
+                    ', reason=' || TRIM(REASONCODE) );
+   END;
+ 
+   /** Helper routine to display a non-zero SQLCODE and abort on error */
+   BE_NOISY_IF_ERROR: PROC( WHAT CHAR(*) );
+     IF SQLCODE ^= 0 THEN DO;
+       PUT SKIP LIST( WHAT || ': Failed with SQLCODE = ' || TRIM(SQLCODE) );
+       SIGNAL ERROR;
+     END;
+   END;
+ 
+   /* Example that uses a mainframe centric (i.e. PIC) host variable */
+   PIC_TEST: PROC;
+     DCL HV PIC '(2)9' INIT( '00' );
+     EXEC SQL
+       SELECT MAX(COMPANY_TYPE) INTO :HV FROM T2021A
+     ;
+     CALL BE_NOISY_IF_ERROR( 'SELECT MAX(COMPANY_TYPE)' );
+ 
+     PUT SKIP LIST( 'MAX(COMPANY_TYPE): ' || HV );
+   END;
+ 
+   /* Input and output host variables, without using a cursor */
+   INPUT_AND_OUTPUT_HOSTVARS: PROC;
+ 
+     DCL COMPANY_CODE CHAR(15) INIT( 'PARENTCOY1' );
+     DCL COMPANY_NAME CHAR(20) VARYING;
+ 
+     EXEC SQL
+       SELECT COMPANY_NAME
+       INTO :COMPANY_NAME
+       FROM T2021A
+       WHERE COMPANY_CODE = :COMPANY_CODE
+       FETCH FIRST ROW ONLY
+     ;
+ 
+     CALL BE_NOISY_IF_ERROR( 'SELECT COMPANY_NAME' );
+ 
+     PUT SKIP LIST( 'COMPANY NAME: ' || TRIM(COMPANY_NAME) );
+   END;
+ 
+   /* Display the total number of rows in table T2021A */
+   COUNTROWS: PROC( MSG CHAR(*) );
+     DCL C FIXED BIN(31) INIT(-1);
+ 
+     EXEC SQL
+       SELECT COUNT(*) FROM T2021A INTO :C
+     ;
+ 
+     CALL BE_NOISY_IF_ERROR( 'COUNT(*)' );
+ 
+     PUT SKIP LIST( MSG || ': ' || C );
+   END COUNTROWS;
+ 
+   /* Construct a dynamic SQL insert statement and execute it */
+   DYNAMIC_SQL_INSERT: PROC;
+     EXEC SQL INCLUDE SQLCA;
+ 
+     DCL SQLSTMT        CHAR(4096) VARYING;
+     DCL COMPANY_CODE   CHAR(10)           INIT('RC');
+     DCL COMPANY_NAME   CHAR(256) VARYING  INIT('RAINCODE');
+     DCL COMPANY_TYPE   FIXED BIN(31)      INIT(42);
+     DCL COUNTRY_CODE   CHAR(2)            INIT('BE');
+     DCL PARENT_COMPANY CHAR(10)           INIT('??');
+     DCL ROW_STATUS     CHAR               INIT('K');
+     DCL CREATED_TST    CHAR(26)           INIT('2018-04-19-15.15.52.526547');
+     DCL UPDATED_TST    CHAR(26)           INIT('2018-04-20-15.16.52.526547');
+     DCL USER_ID_CREATE CHAR(126) VARYING  INIT('DIRK');
+     DCL USER_ID_UPDATE CHAR(126) VARYING  INIT('DIRK');
+ 
+     SQLSTMT = 'INSERT INTO T2021A (COMPANY_CODE,  COMPANY_NAME,' ||
+               'COMPANY_TYPE, COUNTRY_CODE,' ||
+               'PARENT_COMPANY, ROW_STATUS,' ||
+               'CREATED_TST, UPDATED_TST,' ||
+               'USER_ID_CREATE,' ||
+               'USER_ID_UPDATE) VALUES (?,?,?,?,?,?,?,?,?,?)';
+ 
+     CALL COUNTROWS( 'COUNT BEFORE INSERT' );
+ 
+     EXEC SQL PREPARE SQLOBJ FROM :SQLSTMT;
+     CALL BE_NOISY_IF_ERROR( 'PREPARE' );
+ 
+     EXEC SQL EXECUTE SQLOBJ USING :COMPANY_CODE,
+                                   :COMPANY_NAME,
+                                   :COMPANY_TYPE,
+                                   :COUNTRY_CODE,
+                                   :PARENT_COMPANY,
+                                   :ROW_STATUS,
+                                   :CREATED_TST,
+                                   :UPDATED_TST,
+                                   :USER_ID_CREATE,
+                                   :USER_ID_UPDATE;
+     CALL BE_NOISY_IF_ERROR( 'EXECUTE' );
+ 
+     CALL COUNTROWS( 'COUNT AFTER INSERT' );
+ 
+     EXEC SQL ROLLBACK;
+     CALL BE_NOISY_IF_ERROR( 'ROLLBACK' );
+   END DYNAMIC_SQL_INSERT;
+ 
+   FETCH_TEST: PROC OPTIONS(MAIN);
+     DCL COMPANY_CODE CHAR(10);
+     DCL COMPANY_NAME CHAR(256) VARYING;
+     DCL COMPANY_TYPE FIXED BIN(15) INIT(4);
+     DCL IND1         FIXED BIN(15);
+     DCL IND2         FIXED BIN(15);
+ 
+     EXEC SQL
+       DECLARE DACURSOR CURSOR FOR
+       SELECT COMPANY_CODE, COMPANY_NAME
+       FROM T2021A
+       WHERE COMPANY_TYPE = :COMPANY_TYPE
+       ORDER BY COMPANY_NAME ASC
+     ;
+ 
+     PUT SKIP LIST( 'OPENING CURSOR' );
+     EXEC SQL OPEN DACURSOR;
+     CALL BE_NOISY_IF_ERROR( 'OPEN CURSOR' );
+ 
+     CALL FETCH_ALL;
+ 
+     PUT SKIP LIST( 'CLOSING CURSOR' );
+     EXEC SQL CLOSE DACURSOR;
+     CALL BE_NOISY_IF_ERROR( 'CLOSE CURSOR' );
+ 
+     FETCH_ALL: PROC;
+       DCL ROWCOUNT FIXED BIN(31) INIT(1);
+ 
+       DO WHILE (SQLCODE = 0);
+         PUT SKIP LIST( 'ATTEMPTING FETCH OF ROW: ' || TRIM(ROWCOUNT) );
+         EXEC SQL
+           FETCH DACURSOR
+           INTO :COMPANY_CODE :IND1,
+                :COMPANY_NAME :IND2
+         ;
+ 
+         ROWCOUNT = ROWCOUNT + 1;
+ 
+         CALL DISPLAY_FETCH;
+       END;
+     END;
+    
+     DISPLAY_FETCH: PROC;
+       IF SQLCODE = 0 THEN DO;
+         PUT SKIP LIST( TRIM(COMPANY_CODE) || ' | ' || TRIM(COMPANY_NAME) );
+       END;
+     END;
+   END;
+ END;
