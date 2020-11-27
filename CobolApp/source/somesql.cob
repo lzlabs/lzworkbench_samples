@@ -3,7 +3,7 @@
        ENVIRONMENT DIVISION.
        DATA DIVISION.
        WORKING-STORAGE SECTION.
-      * vgf d                      
+      
            EXEC SQL 
               INCLUDE SQLCA
            END-EXEC      
