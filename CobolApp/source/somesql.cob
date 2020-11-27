@@ -23,8 +23,6 @@
            DISPLAY '  <SOMESQL>'
 
            PERFORM FETCHONE
-    
-      *       PERFORM COUNTEM
 
            DISPLAY '  </SOMESQL>'
            GOBACK
